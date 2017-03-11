@@ -5,7 +5,7 @@
 
 Submitted by: **Bright Soo**
 
-Time spent: **23** hours spent in total
+Time spent: **24** hours spent in total
 
 ## User Stories
 
