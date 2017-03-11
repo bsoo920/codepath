@@ -1,11 +1,11 @@
 # codepath
-# Pre-work - tippy
+# Pre-work: tippy
 
 **tippy** is a tip calculator application for iOS.
 
 Submitted by: **Bright Soo**
 
-Time spent: **16** hours spent in total
+Time spent: **23** hours spent in total
 
 ## User Stories
 
@@ -28,8 +28,8 @@ The following **additional** features are implemented:
  - In case of pre-tax, allows user to set the tax rate.
  - Slider control for each of the three tip percentage presets.
    - automatically ensures that percentage1 <= percentage2 <= percentage3
-     - **Code can handle this mechanism on any number of sliders**
- - Slider control animates by moving down when text editing begins, and back up when it ends.
+     - Aside from declaring variables for the individual slider controls and a variable representing the number of sliders, **_the code can handle this mechanism on any number of sliders without further modification._**
+ - Slider controls animate by moving down when text editing begins, and back up when it ends.
 
 ## Video Walkthrough 
 
@@ -41,8 +41,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-- Settings view is a mock-up only.  I could not figure out how to pass values between the Main view and Settings view.
 - App is designed for iPhone 5S.  It does not look good on other screen sizes.
+- App icon is downloaded from internet.
 
 ## License
 
