@@ -36,21 +36,26 @@ class SettingsViewController: UIViewController {
 
     let numSliders = 2      //starting from 0
     let maxPerc  = 0.40
-    var tipPercs = [0.18,0.20,0.25]
+
     var yTaxRate: CGFloat = 0.0
     var yShowSliders: CGFloat = 0.0
     var yHideSliders: CGFloat = 0.0
     
+    let defaults = UserDefaults.standard
+    var preTax1or0 = 0
+    var taxRate = 0.0875
+    var tipPercs = [0.18,0.20,0.25]
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        preTax1or0 = defaults.integer(forKey: "preTax1or0")
+        taxRate    = defaults.double (forKey: "taxRate")
         
-//        let myVC = storyboard?.instantiateViewControllerWithIdentifier("SecondVC") as! SecondVC
-//        myVC.stringPassed = myLabel.text!
-//        navigationController?.pushViewController(myVC, animated: true)
-//
-//        let mainVC = storyboard?.instantiateViewController(withIdentifier: "mainVC") as! ViewController
-//        mainVC.
+        if (defaults.array(forKey: "tipPercentages") != nil) {
+            tipPercs = defaults.array(forKey: "tipPercentages") as! [Double]
+        }
         
         //get reference positions
         yTaxRate = taxRateView.center.y
@@ -58,7 +63,12 @@ class SettingsViewController: UIViewController {
         yHideSliders = yShowSliders + blockView.frame.height
         
         //apply toggle state for taxControl
+        var postTax1or0 = 0
+        if (preTax1or0 == 1) { postTax1or0=0 } else { postTax1or0=1 }
+        taxControl.selectedSegmentIndex = postTax1or0
+        
         applyToggle()
+        taxField.text = String(format: "%.2f", taxRate * 100)
         
         //rotate and set sliders; set tipControl segment titles.
         var SL = [tipSlider0,tipSlider1,tipSlider2]
@@ -75,12 +85,24 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        defaults.set(preTax1or0, forKey: "preTax1or0")
+        defaults.set( (Double(taxField.text!) ?? 0) / 100, forKey: "taxRate")
+        defaults.set(tipPercs, forKey: "tipPercentages")
+        defaults.synchronize()
+    }
+
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     
     @IBAction func taxToggle(_ sender: Any) {
+        if (taxControl.selectedSegmentIndex == 0) { preTax1or0 = 1 } else { preTax1or0 = 0}
+        
         applyToggle()
     }
 
@@ -146,7 +168,7 @@ class SettingsViewController: UIViewController {
 
         tipControl.selectedSegmentIndex = i
         var SLarr = [tipSlider0,tipSlider1,tipSlider2]
-        tipPercs[i] = Double(SL.value) * maxPerc
+        tipPercs[i] = round(Double(SL.value) * maxPerc * 100) / 100
         
         //make sure slider0 <= slider1 <= slider2
         if !(tipSlider0.value <= tipSlider1.value && tipSlider1.value <= tipSlider2.value) {
