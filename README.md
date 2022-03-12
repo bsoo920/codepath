@@ -20,16 +20,14 @@ The following **optional** features are implemented:
 * [Y] Using locale-specific currency and currency thousands separators.
 * [Y] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
-The following **additional** features are implemented:
-- All of the following are in **Settings** view:
- - Toggle tip calculation between **pre-tax** and **after-tax**, which animates the "tax rate" row by:
-    - fading it in or out.
-    - moving it behind the "Calculate tip" row, or out below it.
- - In case of pre-tax, allows user to set the tax rate.
+The following **additional** features are implemented, all in **Settings** view:
  - **Slider controls** for each of the three tip percentage presets.
-   - automatically **ensures that percentage1 <= percentage2 <= percentage3**
-     - Aside from declaring variables for the individual slider controls and a variable representing the number of sliders, **_the code can handle this mechanism on any number of sliders without further modification._**
- - Slider controls animate by moving down when text editing begins, and back up when it ends.
+   - Automatically **ensures that percentage1 <= percentage2 <= percentage3**
+     - Aside from [declaring variables for the individual slider controls and a variable representing the number of sliders](https://github.com/bsoo920/codepath/blob/436610feaf3d2dd2745f00ed45d390bb7ece45d3/tippy/SettingsViewController.swift#L162), **_the code can handle this mechanism on any number of sliders without further modification._**
+ - Toggle tip calculation between **pre-tax** and **after-tax**.
+    - When toggled to pre-tax, a tax rate input box appears (since tax rate is needed for pre-tax tip calculation).
+    - When toggled to after-tax, the input box disappaars.
+    - The appearance/disappearance of the input box is animated as sliding out/in and fading in/out.
 
 ## Video Walkthrough 
 
